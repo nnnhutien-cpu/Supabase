@@ -1,1 +1,28 @@
+name: Chay Code Ket Noi Supabase
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Cho phép bấm chạy bằng tay
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lay code tu GitHub
+        uses: actions/checkout@v3
+
+      - name: Cai dat Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Cai dat thu vien
+        run: pip install -r requirements.txt
+
+      - name: Chay file Code Python
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python main.py
